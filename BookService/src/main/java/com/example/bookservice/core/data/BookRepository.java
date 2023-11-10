@@ -11,5 +11,3 @@ public interface BookRepository extends MongoRepository<BookEntity, String> {
     @Query(value = "{ 'bookId' : ?0 }")
     public BookEntity findBookByBookId(String bookId);
 }
-
-

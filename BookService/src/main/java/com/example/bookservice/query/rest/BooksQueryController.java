@@ -3,27 +3,27 @@ package com.example.bookservice.query.rest;
 import com.example.bookservice.query.FindBooksQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/query/books")
 public class BooksQueryController {
-    private final QueryGateway queryGateway;
 
-    public BooksQueryController(QueryGateway queryGateway) {
-        this.queryGateway = queryGateway;
-    }
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
-    @GetMapping()
-    public List<BookRestModel> getBooks() {
-        FindBooksQuery findBooksQuery = new FindBooksQuery();
-        return queryGateway.query(
-                findBooksQuery,
-                ResponseTypes.multipleInstancesOf(BookRestModel.class)
-        ).join();
+    @GetMapping(value = "/getBook")
+    public ArrayList getBooks() {
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("application/json");
+        Object book = rabbitTemplate.convertSendAndReceive("Direct", "getBook", "");
+        return (ArrayList) book;
     }
 }

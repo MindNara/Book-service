@@ -7,7 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableRabbit
 public class BookServiceApplication {
 
 	public static void main(String[] args) {
