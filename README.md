@@ -20,6 +20,10 @@
 - Create Book: (DELETE) /book-service/deleteBook
 
 ## RabbitMQ
+- Get Book
+    - Queues: GetBookQueue
+    - Exchanges: Direct
+    - Routing key: getBook
 - Create Book
     - Queues: AddBookQueue
     - Exchanges: Direct
