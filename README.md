@@ -1,4 +1,4 @@
-# book-service
+# BookService
 
 ## Dependencies
 - Lombok
