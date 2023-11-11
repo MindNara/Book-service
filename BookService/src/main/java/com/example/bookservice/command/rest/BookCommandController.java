@@ -19,12 +19,15 @@ public class BookCommandController {
         return "Create Book";
     }
 
-    @PutMapping("updateBook/{bookId}")
-    public String updateBook(@PathVariable("bookId") String bookId) {
-        return "HTTP PUT Handled " + bookId;
+    @PutMapping("/updateBook")
+    public String updateBook(@RequestBody BookRestModel model) {
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("application/json");
+        rabbitTemplate.convertAndSend("Direct", "updateBook", model);
+        return "Update Book ID: " + model.getBookId();
     }
 
-    @DeleteMapping("deleteBook/{bookId}")
+    @DeleteMapping("/deleteBook/{bookId}")
     public String deleteBook(@PathVariable("bookId") String bookId) {
         rabbitTemplate.convertAndSend("Direct", "deleteBook", bookId);
         return "Delete Book ID: " + bookId;

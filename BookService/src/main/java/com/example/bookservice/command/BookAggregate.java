@@ -2,6 +2,7 @@ package com.example.bookservice.command;
 
 import com.example.bookservice.core.events.BookCreateEvent;
 import com.example.bookservice.core.events.BookDeleteEvent;
+import com.example.bookservice.core.events.BookUpdateEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -53,6 +54,32 @@ public class BookAggregate {
         this.comment = bookCreateEvent.getComment();
         this.status = bookCreateEvent.getStatus();
         this.userId = bookCreateEvent.getUserId();
+    }
+
+    @CommandHandler
+    public BookAggregate(UpdateBookCommand updateBookCommand) {
+        System.out.println("Book Aggregate: Update Book");
+
+        BookUpdateEvent bookUpdateEvent = new BookUpdateEvent();
+        BeanUtils.copyProperties(updateBookCommand, bookUpdateEvent);
+        AggregateLifecycle.apply(bookUpdateEvent);
+    }
+
+    @EventSourcingHandler
+    public void on(BookUpdateEvent bookUpdateEvent) {
+        System.out.println("ON AGGREGATE: UPDATE BOOK");
+
+        this.bookId = UUID.randomUUID().toString();
+        this.title = bookUpdateEvent.getTitle();
+        this.description = bookUpdateEvent.getDescription();
+        this.category = bookUpdateEvent.getCategory();
+        this.type = bookUpdateEvent.getType();
+        this.cover = bookUpdateEvent.getCover();
+        this.view = bookUpdateEvent.getView();
+        this.like = bookUpdateEvent.getLike();
+        this.comment = bookUpdateEvent.getComment();
+        this.status = bookUpdateEvent.getStatus();
+        this.userId = bookUpdateEvent.getUserId();
     }
 
     @CommandHandler

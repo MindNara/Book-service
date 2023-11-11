@@ -50,6 +50,32 @@ public class BookCommandService {
         }
     }
 
+    @RabbitListener(queues = "UpdateBookQueue")
+    public void updateBook(BookRestModel model) {
+        System.out.println("UPDATE BOOK");
+        System.out.println(model);
+
+        UpdateBookCommand command = UpdateBookCommand.builder()
+                .bookId(model.getBookId())
+                .title(model.getTitle())
+                .description(model.getDescription())
+                .category(model.getCategory())
+                .type(model.getType())
+                .cover(model.getCover())
+                .view(model.getView())
+                .like(model.getLike())
+                .comment(model.getComment())
+                .status(model.getStatus())
+                .userId(model.getUserId())
+                .build();
+
+        try {
+            commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @RabbitListener(queues = "DeleteBookQueue")
     public void deleteBook(String bookId) {
         System.out.println("DELETE BOOK: " + bookId);
@@ -80,26 +106,6 @@ public class BookCommandService {
         } else {
             System.out.println("Book not found with ID: " + bookId);
         }
-
-//        DeleteBookCommand deleteBookCommand = DeleteBookCommand.builder()
-//                .bookId(bookEntity.getBookId())
-//                .title(bookEntity.getTitle())
-//                .description(bookEntity.getDescription())
-//                .category(bookEntity.getCategory())
-//                .type(bookEntity.getType())
-//                .cover(bookEntity.getCover())
-//                .view(bookEntity.getView())
-//                .like(bookEntity.getLike())
-//                .comment(bookEntity.getComment())
-//                .status(bookEntity.getStatus())
-//                .userId(bookEntity.getUserId())
-//                .build();
-//
-//        try {
-//            commandGateway.send(deleteBookCommand);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
     }
 }
