@@ -22,12 +22,12 @@ public class BookEntity implements Serializable {
     private Integer like;
     private Integer comment;
     private String status;
-    private String authorId;
+    private String userId;
 
     public BookEntity() {
     }
 
-    public BookEntity(String bookId, String title, String description, String category, String type, String cover, Integer view, Integer like, Integer comment, String status, String authorId) {
+    public BookEntity(String bookId, String title, String description, String category, String type, String cover, Integer view, Integer like, Integer comment, String status, String userId) {
         this.bookId = bookId;
         this.title = title;
         this.description = description;
@@ -38,6 +38,6 @@ public class BookEntity implements Serializable {
         this.like = like;
         this.comment = comment;
         this.status = status;
-        this.authorId = authorId;
+        this.userId = userId;
     }
 }

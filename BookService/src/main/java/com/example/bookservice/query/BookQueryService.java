@@ -22,12 +22,23 @@ public class BookQueryService {
 
     @RabbitListener(queues = "GetBookQueue")
     public List<BookRestModel> getBook() {
-        System.out.println("GET BOOKS");
+        System.out.println("GET ALL BOOKS");
 
         FindBooksQuery findBooksQuery = new FindBooksQuery();
         return queryGateway.query(
                 findBooksQuery,
                 ResponseTypes.multipleInstancesOf(BookRestModel.class)
+        ).join();
+    }
+
+    @RabbitListener(queues = "GetBookIdQueue")
+    public BookRestModel getBookByBookId(String bookId) {
+        System.out.println("GET BOOK BY BOOK ID: " + bookId);
+
+        FindBooksByBookIdQuery findBooksByBookIdQuery = new FindBooksByBookIdQuery(bookId);
+        return queryGateway.query(
+                findBooksByBookIdQuery,
+                ResponseTypes.instanceOf(BookRestModel.class)
         ).join();
     }
 }

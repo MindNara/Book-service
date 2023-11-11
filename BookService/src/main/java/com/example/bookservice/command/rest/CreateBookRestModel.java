@@ -17,21 +17,5 @@ public class CreateBookRestModel implements Serializable {
     private Integer like;
     private Integer comment;
     private String status;
-    private String authorId;
-
-    public CreateBookRestModel() {
-    }
-
-    public CreateBookRestModel(String title, String description, String category, String type, String cover, Integer view, Integer like, Integer comment, String status, String authorId) {
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.type = type;
-        this.cover = cover;
-        this.view = view;
-        this.like = like;
-        this.comment = comment;
-        this.status = status;
-        this.authorId = authorId;
-    }
+    private String userId;
 }

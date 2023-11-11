@@ -23,7 +23,7 @@ public class BookAggregate {
     private Integer like;
     private Integer comment;
     private String status;
-    private String authorId;
+    private String userId;
 
     public BookAggregate() {
     }
@@ -49,6 +49,6 @@ public class BookAggregate {
         this.like = bookCreateEvent.getLike();
         this.comment = bookCreateEvent.getComment();
         this.status = bookCreateEvent.getStatus();
-        this.authorId = bookCreateEvent.getAuthorId();
+        this.userId = bookCreateEvent.getUserId();
     }
 }

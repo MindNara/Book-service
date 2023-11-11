@@ -35,7 +35,7 @@ public class BookCommandService {
                 .like(model.getLike())
                 .comment(model.getComment())
                 .status(model.getStatus())
-                .authorId(model.getAuthorId())
+                .userId(model.getUserId())
                 .build();
 
         System.out.println(command);

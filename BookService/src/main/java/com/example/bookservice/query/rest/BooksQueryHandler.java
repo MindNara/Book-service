@@ -2,13 +2,13 @@ package com.example.bookservice.query.rest;
 
 import com.example.bookservice.core.data.BookEntity;
 import com.example.bookservice.core.data.BookRepository;
+import com.example.bookservice.query.FindBooksByBookIdQuery;
 import com.example.bookservice.query.FindBooksQuery;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class BooksQueryHandler {
@@ -28,5 +28,19 @@ public class BooksQueryHandler {
             bookRest.add(bookRestModel);
         }
         return bookRest;
+    }
+
+    @QueryHandler
+    public BookRestModel findBooksByBookId(FindBooksByBookIdQuery query) {
+        BookEntity bookEntity = bookRepository.findBookByBookId(query.getBookId());
+
+        if (bookEntity != null) {
+            BookRestModel bookRestModel = new BookRestModel();
+            BeanUtils.copyProperties(bookEntity, bookRestModel);
+            return bookRestModel;
+        } else {
+            return null;
+        }
+
     }
 }

@@ -14,5 +14,5 @@ public class BookRestModel {
     private Integer like;
     private Integer comment;
     private String status;
-    private String authorId;
+    private String userId;
 }

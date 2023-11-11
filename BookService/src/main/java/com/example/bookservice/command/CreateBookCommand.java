@@ -18,5 +18,5 @@ public class CreateBookCommand {
     private final Integer like;
     private final Integer comment;
     private final String status;
-    private final String authorId;
+    private final String userId;
 }
