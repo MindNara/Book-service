@@ -1,7 +1,8 @@
 package com.example.bookservice.command;
 
-import com.example.bookservice.command.rest.CreateBookRestModel;
+import com.example.bookservice.command.rest.BookRestModel;
 import com.example.bookservice.core.data.BookEntity;
+import com.example.bookservice.core.data.BookRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,16 @@ public class BookCommandService {
     private final CommandGateway commandGateway;
 
     @Autowired
-    public BookCommandService(CommandGateway commandGateway) {
+    private final BookRepository bookRepository;
+
+    @Autowired
+    public BookCommandService(CommandGateway commandGateway, BookRepository bookRepository) {
         this.commandGateway = commandGateway;
+        this.bookRepository = bookRepository;
     }
 
     @RabbitListener(queues = "AddBookQueue")
-    public void createBook(CreateBookRestModel model) {
+    public void createBook(BookRestModel model) {
         System.out.println("CREATE BOOK");
 
         CreateBookCommand command = CreateBookCommand.builder()
@@ -38,8 +43,6 @@ public class BookCommandService {
                 .userId(model.getUserId())
                 .build();
 
-        System.out.println(command);
-
         try {
             commandGateway.sendAndWait(command);
         } catch (Exception e) {
@@ -50,5 +53,53 @@ public class BookCommandService {
     @RabbitListener(queues = "DeleteBookQueue")
     public void deleteBook(String bookId) {
         System.out.println("DELETE BOOK: " + bookId);
+
+        BookEntity bookEntity = bookRepository.findBookByBookId(bookId);
+        System.out.println(bookEntity);
+
+        if (bookEntity != null) {
+            DeleteBookCommand deleteBookCommand = DeleteBookCommand.builder()
+                    .bookId(bookEntity.getBookId())
+                    .title(bookEntity.getTitle())
+                    .description(bookEntity.getDescription())
+                    .category(bookEntity.getCategory())
+                    .type(bookEntity.getType())
+                    .cover(bookEntity.getCover())
+                    .view(bookEntity.getView())
+                    .like(bookEntity.getLike())
+                    .comment(bookEntity.getComment())
+                    .status(bookEntity.getStatus())
+                    .userId(bookEntity.getUserId())
+                    .build();
+
+            try {
+                commandGateway.sendAndWait(deleteBookCommand);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Book not found with ID: " + bookId);
+        }
+
+//        DeleteBookCommand deleteBookCommand = DeleteBookCommand.builder()
+//                .bookId(bookEntity.getBookId())
+//                .title(bookEntity.getTitle())
+//                .description(bookEntity.getDescription())
+//                .category(bookEntity.getCategory())
+//                .type(bookEntity.getType())
+//                .cover(bookEntity.getCover())
+//                .view(bookEntity.getView())
+//                .like(bookEntity.getLike())
+//                .comment(bookEntity.getComment())
+//                .status(bookEntity.getStatus())
+//                .userId(bookEntity.getUserId())
+//                .build();
+//
+//        try {
+//            commandGateway.send(deleteBookCommand);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
     }
 }
