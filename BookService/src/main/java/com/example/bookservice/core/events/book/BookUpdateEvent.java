@@ -1,9 +1,9 @@
-package com.example.bookservice.core.events;
+package com.example.bookservice.core.events.book;
 
 import lombok.Data;
 
 @Data
-public class BookDeleteEvent {
+public class BookUpdateEvent {
     private String bookId;
     private String title;
     private String description;

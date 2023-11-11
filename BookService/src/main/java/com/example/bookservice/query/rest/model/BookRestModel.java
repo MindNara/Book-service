@@ -1,9 +1,9 @@
-package com.example.bookservice.core.events;
+package com.example.bookservice.query.rest.model;
 
 import lombok.Data;
 
 @Data
-public class BookUpdateEvent {
+public class BookRestModel {
     private String bookId;
     private String title;
     private String description;

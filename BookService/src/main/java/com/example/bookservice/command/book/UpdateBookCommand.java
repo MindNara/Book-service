@@ -1,4 +1,4 @@
-package com.example.bookservice.command;
+package com.example.bookservice.command.book;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,7 +6,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Builder
 @Data
-public class DeleteBookCommand {
+public class UpdateBookCommand {
     @TargetAggregateIdentifier
     private final String bookId;
     private final String title;

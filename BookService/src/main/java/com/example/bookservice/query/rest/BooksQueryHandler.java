@@ -4,6 +4,7 @@ import com.example.bookservice.core.data.BookEntity;
 import com.example.bookservice.core.data.BookRepository;
 import com.example.bookservice.query.FindBooksByBookIdQuery;
 import com.example.bookservice.query.FindBooksQuery;
+import com.example.bookservice.query.rest.model.BookRestModel;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,6 @@
 package com.example.bookservice.query;
 
-import com.example.bookservice.query.rest.BookRestModel;
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import com.example.bookservice.query.rest.model.BookRestModel;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

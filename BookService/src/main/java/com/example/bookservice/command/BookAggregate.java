@@ -1,8 +1,11 @@
 package com.example.bookservice.command;
 
-import com.example.bookservice.core.events.BookCreateEvent;
-import com.example.bookservice.core.events.BookDeleteEvent;
-import com.example.bookservice.core.events.BookUpdateEvent;
+import com.example.bookservice.command.book.CreateBookCommand;
+import com.example.bookservice.command.book.DeleteBookCommand;
+import com.example.bookservice.command.book.UpdateBookCommand;
+import com.example.bookservice.core.events.book.BookCreateEvent;
+import com.example.bookservice.core.events.book.BookDeleteEvent;
+import com.example.bookservice.core.events.book.BookUpdateEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -43,7 +46,7 @@ public class BookAggregate {
     public void on(BookCreateEvent bookCreateEvent) {
         System.out.println("ON AGGREGATE: CREATE BOOK");
 
-        this.bookId = bookCreateEvent.getBookId();
+        this.bookId = UUID.randomUUID().toString();
         this.title = bookCreateEvent.getTitle();
         this.description = bookCreateEvent.getDescription();
         this.category = bookCreateEvent.getCategory();

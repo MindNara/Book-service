@@ -1,8 +1,17 @@
 package com.example.bookservice.command;
 
+import com.example.bookservice.command.book.CreateBookCommand;
+import com.example.bookservice.command.book.DeleteBookCommand;
+import com.example.bookservice.command.book.UpdateBookCommand;
+import com.example.bookservice.command.chapter.CreateChapterCommand;
+import com.example.bookservice.command.chapter.DeleteChapterCommand;
+import com.example.bookservice.command.chapter.UpdateChapterCommand;
 import com.example.bookservice.command.rest.BookRestModel;
+import com.example.bookservice.command.rest.ChapterRestModel;
 import com.example.bookservice.core.data.BookEntity;
 import com.example.bookservice.core.data.BookRepository;
+import com.example.bookservice.core.data.ChapterEntity;
+import com.example.bookservice.core.data.ChapterRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +29,13 @@ public class BookCommandService {
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookCommandService(CommandGateway commandGateway, BookRepository bookRepository) {
+    private final ChapterRepository chapterRepository;
+
+    @Autowired
+    public BookCommandService(CommandGateway commandGateway, BookRepository bookRepository, ChapterRepository chapterRepository) {
         this.commandGateway = commandGateway;
         this.bookRepository = bookRepository;
+        this.chapterRepository = chapterRepository;
     }
 
     @RabbitListener(queues = "AddBookQueue")
@@ -53,7 +66,6 @@ public class BookCommandService {
     @RabbitListener(queues = "UpdateBookQueue")
     public void updateBook(BookRestModel model) {
         System.out.println("UPDATE BOOK");
-        System.out.println(model);
 
         UpdateBookCommand command = UpdateBookCommand.builder()
                 .bookId(model.getBookId())
@@ -81,7 +93,6 @@ public class BookCommandService {
         System.out.println("DELETE BOOK: " + bookId);
 
         BookEntity bookEntity = bookRepository.findBookByBookId(bookId);
-        System.out.println(bookEntity);
 
         if (bookEntity != null) {
             DeleteBookCommand deleteBookCommand = DeleteBookCommand.builder()
@@ -107,5 +118,76 @@ public class BookCommandService {
             System.out.println("Book not found with ID: " + bookId);
         }
 
+    }
+
+    @RabbitListener(queues = "AddChapterQueue")
+    public void createChapter(ChapterRestModel model) {
+        System.out.println("CREATE CHAPTER");
+
+        CreateChapterCommand command = CreateChapterCommand.builder()
+                .chapterId(UUID.randomUUID().toString())
+                .number(model.getNumber())
+                .title(model.getTitle())
+                .content(model.getContent())
+                .cover(model.getCover())
+                .view(model.getView())
+                .like(model.getLike())
+                .date(model.getDate())
+                .bookId(model.getBookId())
+                .build();
+
+        try {
+            commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RabbitListener(queues = "UpdateChapterQueue")
+    public void updateChapter(ChapterRestModel model) {
+        System.out.println("UPDATE CHAPTER");
+
+        UpdateChapterCommand command = UpdateChapterCommand.builder()
+                .chapterId(model.getChapterId())
+                .number(model.getNumber())
+                .title(model.getTitle())
+                .content(model.getContent())
+                .cover(model.getCover())
+                .view(model.getView())
+                .like(model.getLike())
+                .date(model.getDate())
+                .bookId(model.getBookId())
+                .build();
+
+        try {
+            commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RabbitListener(queues = "DeleteChapterQueue")
+    public void deleteChapter(String chapterId) {
+        System.out.println("DELETE CHAPTER");
+
+        ChapterEntity chapterEntity = chapterRepository.findChapterByChapterId(chapterId);
+
+        DeleteChapterCommand command = DeleteChapterCommand.builder()
+                .chapterId(chapterEntity.getChapterId())
+                .number(chapterEntity.getNumber())
+                .title(chapterEntity.getTitle())
+                .content(chapterEntity.getContent())
+                .cover(chapterEntity.getCover())
+                .view(chapterEntity.getView())
+                .like(chapterEntity.getLike())
+                .date(chapterEntity.getDate())
+                .bookId(chapterEntity.getBookId())
+                .build();
+
+        try {
+            commandGateway.sendAndWait(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
