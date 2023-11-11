@@ -1,4 +1,4 @@
-package com.example.bookservice.command.rest;
+package com.example.bookservice.command.chapter;
 
 import lombok.Data;
 

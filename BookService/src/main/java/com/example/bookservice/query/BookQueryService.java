@@ -1,7 +1,11 @@
 package com.example.bookservice.query;
 
-import com.example.bookservice.query.rest.model.BookRestModel;
-import com.example.bookservice.query.rest.model.ChapterRestModel;
+import com.example.bookservice.query.rest.book.BookRestModel;
+import com.example.bookservice.query.rest.book.FindBooksByBookIdQuery;
+import com.example.bookservice.query.rest.book.FindBooksQuery;
+import com.example.bookservice.query.rest.chapter.ChapterRestModel;
+import com.example.bookservice.query.rest.chapter.FindChapterByChapterIdQuery;
+import com.example.bookservice.query.rest.chapter.FindChapterQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

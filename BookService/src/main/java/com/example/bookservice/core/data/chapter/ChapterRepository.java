@@ -1,4 +1,4 @@
-package com.example.bookservice.core.data;
+package com.example.bookservice.core.data.chapter;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

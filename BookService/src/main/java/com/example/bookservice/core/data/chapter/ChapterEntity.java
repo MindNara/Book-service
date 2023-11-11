@@ -1,4 +1,4 @@
-package com.example.bookservice.core.data;
+package com.example.bookservice.core.data.chapter;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

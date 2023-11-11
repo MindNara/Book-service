@@ -1,4 +1,4 @@
-package com.example.bookservice.command;
+package com.example.bookservice.command.chapter;
 
 import com.example.bookservice.command.chapter.CreateChapterCommand;
 import com.example.bookservice.command.chapter.DeleteChapterCommand;

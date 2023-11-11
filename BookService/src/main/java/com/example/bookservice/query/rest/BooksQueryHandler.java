@@ -1,15 +1,15 @@
 package com.example.bookservice.query.rest;
 
-import com.example.bookservice.core.data.BookEntity;
-import com.example.bookservice.core.data.BookRepository;
-import com.example.bookservice.core.data.ChapterEntity;
-import com.example.bookservice.core.data.ChapterRepository;
-import com.example.bookservice.query.FindBooksByBookIdQuery;
-import com.example.bookservice.query.FindBooksQuery;
-import com.example.bookservice.query.FindChapterByChapterIdQuery;
-import com.example.bookservice.query.FindChapterQuery;
-import com.example.bookservice.query.rest.model.BookRestModel;
-import com.example.bookservice.query.rest.model.ChapterRestModel;
+import com.example.bookservice.core.data.book.BookEntity;
+import com.example.bookservice.core.data.book.BookRepository;
+import com.example.bookservice.core.data.chapter.ChapterEntity;
+import com.example.bookservice.core.data.chapter.ChapterRepository;
+import com.example.bookservice.query.rest.book.FindBooksByBookIdQuery;
+import com.example.bookservice.query.rest.book.FindBooksQuery;
+import com.example.bookservice.query.rest.chapter.FindChapterByChapterIdQuery;
+import com.example.bookservice.query.rest.chapter.FindChapterQuery;
+import com.example.bookservice.query.rest.book.BookRestModel;
+import com.example.bookservice.query.rest.chapter.ChapterRestModel;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

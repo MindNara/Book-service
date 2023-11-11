@@ -1,4 +1,4 @@
-package com.example.bookservice.query;
+package com.example.bookservice.query.rest.chapter;
 
 public class FindChapterByChapterIdQuery {
 

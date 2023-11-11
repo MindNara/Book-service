@@ -1,4 +1,4 @@
-package com.example.bookservice.query.rest.model;
+package com.example.bookservice.query.rest.chapter;
 
 import lombok.Data;
 

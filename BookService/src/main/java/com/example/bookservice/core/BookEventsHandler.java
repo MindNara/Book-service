@@ -1,9 +1,9 @@
 package com.example.bookservice.core;
 
-import com.example.bookservice.core.data.BookEntity;
-import com.example.bookservice.core.data.BookRepository;
-import com.example.bookservice.core.data.ChapterEntity;
-import com.example.bookservice.core.data.ChapterRepository;
+import com.example.bookservice.core.data.book.BookEntity;
+import com.example.bookservice.core.data.book.BookRepository;
+import com.example.bookservice.core.data.chapter.ChapterEntity;
+import com.example.bookservice.core.data.chapter.ChapterRepository;
 import com.example.bookservice.core.events.book.BookCreateEvent;
 import com.example.bookservice.core.events.book.BookDeleteEvent;
 import com.example.bookservice.core.events.book.BookUpdateEvent;
